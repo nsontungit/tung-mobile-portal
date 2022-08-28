@@ -1,0 +1,15 @@
+span {
+    color: white;
+}
+
+::ng-deep .mat-snack-bar-container {
+    text-align: center;
+}
+
+::ng-deep .mat-snack-bar-container.error{
+    background-color: rgb(194, 40, 40);
+}
+
+::ng-deep .mat-snack-bar-container.success{
+    background-color: rgb(31, 165, 31);
+}
