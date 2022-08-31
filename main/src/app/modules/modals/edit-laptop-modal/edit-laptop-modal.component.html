@@ -9,7 +9,7 @@
             </button>
         </div>
         <div class="row justify-content-between mb-3">
-            <div class="col-6">
+            <div class="col-4">
                 <mat-form-field appearance="fill">
                     <mat-label>name</mat-label>
                     <input matInput placeholder="Dell, Lenovo,..." formControlName="name">
@@ -17,7 +17,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
                 <mat-form-field appearance="fill">
                     <mat-label>RAM</mat-label>
                     <input matInput placeholder="16GB" formControlName="ram">
@@ -25,7 +25,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
                 <mat-form-field appearance="fill">
                     <mat-label>ROM</mat-label>
                     <input matInput placeholder="256GB" formControlName="rom">
@@ -33,11 +33,35 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
                 <mat-form-field appearance="fill">
                     <mat-label>price</mat-label>
                     <input matInput placeholder="0$" formControlName="price">
                     <mat-error *ngIf="laptopForm.controls['price'].invalid">{{getErrorMessage('price')}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>screen size</mat-label>
+                    <input matInput placeholder="15" formControlName="screenSize">
+                    <mat-error *ngIf="laptopForm.controls['screenSize'].invalid">{{getErrorMessage('screenSize')}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>resolution</mat-label>
+                    <input matInput placeholder="1920*1080" formControlName="resolution">
+                    <mat-error *ngIf="laptopForm.controls['resolution'].invalid">{{getErrorMessage('resolution')}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>brand</mat-label>
+                    <input matInput placeholder="DELL" formControlName="brand">
+                    <mat-error *ngIf="laptopForm.controls['brand'].invalid">{{getErrorMessage('brand')}}</mat-error>
                 </mat-form-field>
             </div>
 

@@ -22,7 +22,7 @@ export class NotificationInterceptorService implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           const message = event.body.message;
           if (message)
-            this.showToaster('done', succesType);
+            this.showToaster(message, succesType);
         }
         return event;
       }),
@@ -48,6 +48,9 @@ export class NotificationInterceptorService implements HttpInterceptor {
           }
           else if (statusCode === 404) {
             errorMessage = 'Data not found';
+          }
+          else if (statusCode == 400) {
+            errorMessage = 'Data not valid';
           }
         }
         this.showToaster(errorMessage, errorType);
