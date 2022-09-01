@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Operation } from 'src/app/enums/operations';
 import { EditLaptopModalComponent } from '../modals/edit-laptop-modal/edit-laptop-modal.component';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LaptopService } from 'src/app/services/laptop.service';
 import { Laptop } from 'src/app/models/laptop';
 
@@ -13,33 +13,49 @@ import { Laptop } from 'src/app/models/laptop';
 })
 export class LaptopManagementOverviewComponent implements OnInit {
 
-  private laptop: Laptop;
+  private laptops: Laptop[] = [];
+  private dialogConfig: MatDialogConfig = {
+    height: 'auto',
+    width: '70em',
+    direction: 'ltr',
+    autoFocus: true,
+    position: { top: '5%' }
+  };
+  displayedColumns: string[] = ['name', 'ram', 'rom', 'resolution', 'screenSize', 'price', 'button'];
 
   constructor(private dialog: MatDialog, private laptopService: LaptopService) { }
 
   async ngOnInit(): Promise<void> {
-    await this.getLaptop();
+    await this.getLaptops();
   }
 
-  open() {
-
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.height = 'auto';
-    dialogConfig.width = '70em';
-    dialogConfig.direction = 'ltr';
-    dialogConfig.autoFocus = true;
-    dialogConfig.position = { top: '5%' };
-
-    const dialogRef = this.dialog.open(EditLaptopModalComponent, dialogConfig);
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(EditLaptopModalComponent, this.dialogConfig);
     dialogRef.componentInstance.operation = Operation.Create;
-    dialogRef.afterOpened().subscribe(result => {
-      console.log(result);
-    });
+    dialogRef.componentInstance.title = 'create new laptop';
   }
 
-  async getLaptop() {
-    this.laptop = await this.laptopService.getOne().toPromise();
-    console.log(this.laptop);
+  openUpdateDialog(id: number): void {
+    const laptop = this.getLaptopById(id);
+    if (laptop) {
+      const dialogRef = this.dialog.open(EditLaptopModalComponent, this.dialogConfig);
+      dialogRef.componentInstance.operation = Operation.Update;
+      dialogRef.componentInstance.title = 'update laptop';
+      dialogRef.componentInstance.laptop = laptop;
+    }
+  }
+
+  get dataSource(): Laptop[] {
+    return this.laptops;
+  }
+
+  private async getLaptops() {
+    this.laptops = await this.laptopService.getAll().toPromise();
+    console.log(this.laptops);
+  }
+
+  private getLaptopById(id: number): Laptop {
+    return this.laptops.find(e => e.id == id);
   }
 
 }

@@ -15,7 +15,13 @@ export class LaptopService {
   constructor(private http: HttpClient) { }
 
   getOne() {
-    return this.http.get<Laptop>(`${this.host_url}`).pipe(map (e => e));
+    return this.http.get<Laptop>(`${this.host_url}`)
+        .pipe(map (e => e));
+  }
+
+  getAll(): Observable<Laptop[]> {
+    return this.http.get<ApiResult>(`${this.host_url}`)
+        .pipe(map (e => e.data as Laptop[]));
   }
 
   createOne(formData): Observable<ApiResult> {

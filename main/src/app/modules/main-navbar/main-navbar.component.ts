@@ -18,4 +18,5 @@ export class MainNavbarComponent implements OnInit {
     { label: 'Mobiles', path: '/management/mobiles' },
   ];
 
+
 }
