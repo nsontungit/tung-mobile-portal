@@ -24,6 +24,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptorService } from './interceptors/loading-interceptor.service';
 import { LoadingComponent } from './modules/loading/loading.component';
 import { NotificationInterceptorService } from './interceptors/notification-interceptor.service';
+import { RetryPolicyInterceptorService } from './interceptors/retry-policy-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NotificationInterceptorService } from './interceptors/notification-inte
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NotificationInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RetryPolicyInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]
 })
