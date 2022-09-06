@@ -1,11 +1,16 @@
 <div class="row justify-content-center my-2 mx-0">
-    <div class="col-8 mb-2 p-0 text-end">
-        <button mat-stroked-button color="primary" (click)="openCreateDialog()">
-            <mat-icon>add_circle</mat-icon>
-            <span> new laptop</span>
-        </button>
+    <div class="row mx-0 col-10 mb-2 p-0">
+        <div class="col-6">
+            <b>{{resultCount}} results</b>
+        </div>
+        <div class="col-6 text-end">
+            <button mat-stroked-button color="primary" (click)="openCreateDialog()">
+                <mat-icon>add_circle</mat-icon>
+                <span> new laptop</span>
+            </button>
+        </div>
     </div>
-    <div class="col-8 mat-elevation-z8">
+    <div class="col-10 mat-elevation-z8">
         <table class="w-100" mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
                 <th style="width: 25%;" mat-header-cell *matHeaderCellDef>Name</th>

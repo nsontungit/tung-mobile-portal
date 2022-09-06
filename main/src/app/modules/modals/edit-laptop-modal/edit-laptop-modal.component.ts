@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Operation } from 'src/app/enums/operations';
 import { Laptop } from 'src/app/models/laptop';
+import { Option } from 'src/app/models/option';
 import { ErrorMessageService } from 'src/app/services/error-message';
 import { LaptopService } from 'src/app/services/laptop.service';
 
@@ -19,6 +20,8 @@ export class EditLaptopModalComponent implements OnInit {
 
   laptopForm: FormGroup;
   isCloseDialog: boolean = false;
+  laptopOptions: Option[] = [];
+  laptopBrandOptions: Option[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<EditLaptopModalComponent>,
@@ -27,11 +30,22 @@ export class EditLaptopModalComponent implements OnInit {
     private errorMessageService: ErrorMessageService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.makeForm();
+    await this.prepareData();
   }
 
-  makeForm() {
+  private async prepareData() {
+    await Promise.all([
+      this.laptopService.getAllOptions().toPromise(),
+      this.laptopService.getLaptopBrandOptions().toPromise(),
+    ]).then(values => {
+      this.laptopOptions = values[0];
+      this.laptopBrandOptions = values[1];
+    });
+  }
+
+  private makeForm() {
     if (this.laptop != null) {
       this.laptopForm = this.formBuilder.group({
         name: [this.laptop.name, [Validators.required]],
@@ -54,7 +68,14 @@ export class EditLaptopModalComponent implements OnInit {
         brand: [null],
       });
     }
+  }
 
+  get resolutionOptions(): Option[] {
+    return this.laptopOptions.filter(e => e.type == 'resolution');
+  }
+
+  get brandOptions(): Option[] {
+    return this.laptopBrandOptions;
   }
 
   getErrorMessage(name: string): string {
@@ -62,10 +83,16 @@ export class EditLaptopModalComponent implements OnInit {
     return msg == null ? null : msg[0];
   }
 
-  async onSubmit() {
+  closeDialog() {
+    this.dialogRef.close([]);
+  }
+
+  async submitDialog() {
     if (this.laptopForm.valid) {
+      console.log('submit');
+      
       await this.laptopService.createOne(this.laptopForm.value).toPromise();
-      this.dialogRef.close();
+      this.dialogRef.close([]);
     }
   }
 

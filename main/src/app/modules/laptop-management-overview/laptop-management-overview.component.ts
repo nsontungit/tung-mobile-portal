@@ -5,6 +5,7 @@ import { EditLaptopModalComponent } from '../modals/edit-laptop-modal/edit-lapto
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LaptopService } from 'src/app/services/laptop.service';
 import { Laptop } from 'src/app/models/laptop';
+import { Option } from 'src/app/models/option';
 
 @Component({
   selector: 'app-laptop-management-overview',
@@ -23,10 +24,13 @@ export class LaptopManagementOverviewComponent implements OnInit {
   };
   displayedColumns: string[] = ['name', 'ram', 'rom', 'resolution', 'screenSize', 'price', 'button'];
 
-  constructor(private dialog: MatDialog, private laptopService: LaptopService) { }
+  constructor(
+    private dialog: MatDialog,
+    private laptopService: LaptopService
+  ) { }
 
   async ngOnInit(): Promise<void> {
-    await this.getLaptops();
+    await this.prepareLaptopData();
   }
 
   openCreateDialog(): void {
@@ -49,9 +53,18 @@ export class LaptopManagementOverviewComponent implements OnInit {
     return this.laptops;
   }
 
-  private async getLaptops() {
-    this.laptops = await this.laptopService.getAll().toPromise();
-    console.log(this.laptops);
+  get resultCount(): number {
+    return this.laptops.length;
+  }
+
+  private async prepareLaptopData() {
+    await Promise.all(
+      [
+        this.laptopService.getAll().toPromise(),
+      ]
+    ).then(values => {
+      this.laptops = values[0];
+    });
   }
 
   private getLaptopById(id: number): Laptop {

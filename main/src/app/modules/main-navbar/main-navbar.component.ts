@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { MenuConfig } from 'src/app/configs/menu-config';
 
 @Component({
@@ -13,7 +14,7 @@ export class MainNavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  subMenuConfig : MenuConfig[] = [
+  subMenuConfig: MenuConfig[] = [
     { label: 'Laptops', path: '/management/laptops' },
     { label: 'Mobiles', path: '/management/mobiles' },
   ];

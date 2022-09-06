@@ -20,6 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptorService } from './interceptors/loading-interceptor.service';
 import { LoadingComponent } from './modules/loading/loading.component';
@@ -53,6 +54,7 @@ import { RetryPolicyInterceptorService } from './interceptors/retry-policy-inter
     MatSnackBarModule,
     MatTableModule,
     MatMenuModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true },
