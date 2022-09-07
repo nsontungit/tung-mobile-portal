@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResult } from '../models/api-result';
+import { Paging } from '../models/common';
 import { Laptop, LaptopDto } from '../models/laptop';
 import { Option } from '../models/option';
 
@@ -20,9 +21,9 @@ export class LaptopService {
         .pipe(map (e => e));
   }
 
-  getAll(): Observable<Laptop[]> {
-    return this.http.get<ApiResult>(`${this.host_url}`)
-        .pipe(map (e => e.data as Laptop[]));
+  getAll(pageSize: number, pageNumber: number): Observable<Paging<Laptop>> {
+    return this.http.get<ApiResult>(`${this.host_url}?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+        .pipe(map (e => e.data as Paging<Laptop>));
   }
 
   getOptions(type: string): Observable<Option[]> {

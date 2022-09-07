@@ -6,6 +6,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LaptopService } from 'src/app/services/laptop.service';
 import { Laptop } from 'src/app/models/laptop';
 import { Option } from 'src/app/models/option';
+import { PageEvent } from '@angular/material/paginator';
+import { Paging } from 'src/app/models/common';
 
 @Component({
   selector: 'app-laptop-management-overview',
@@ -14,7 +16,12 @@ import { Option } from 'src/app/models/option';
 })
 export class LaptopManagementOverviewComponent implements OnInit {
 
-  private laptops: Laptop[] = [];
+  // MatPaginator Inputs
+  totalRows: number;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize: number = 5;
+
+  private pagingLaptops: Paging<Laptop>;
   private dialogConfig: MatDialogConfig = {
     height: 'auto',
     width: '70em',
@@ -50,25 +57,30 @@ export class LaptopManagementOverviewComponent implements OnInit {
   }
 
   get dataSource(): Laptop[] {
-    return this.laptops;
+    return this.pagingLaptops?.data;
   }
 
   get resultCount(): number {
-    return this.laptops.length;
+    return this.pagingLaptops?.data?.length;
   }
 
   private async prepareLaptopData() {
     await Promise.all(
       [
-        this.laptopService.getAll().toPromise(),
+        this.laptopService.getAll(this.pageSize, 0).toPromise(),
       ]
     ).then(values => {
-      this.laptops = values[0];
+      this.pagingLaptops = values[0];
+      this.totalRows = this.pagingLaptops.totalRows;
     });
   }
 
+  public async pageChange(pageEvent: PageEvent) {
+    this.pagingLaptops = await this.laptopService.getAll(pageEvent.pageSize, pageEvent.pageIndex).toPromise();
+  }
+
   private getLaptopById(id: number): Laptop {
-    return this.laptops.find(e => e.id == id);
+    return this.pagingLaptops.data.find(e => e.id == id);
   }
 
 }
