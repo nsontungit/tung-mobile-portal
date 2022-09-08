@@ -27,6 +27,7 @@ import { LoadingInterceptorService } from './interceptors/loading-interceptor.se
 import { LoadingComponent } from './modules/loading/loading.component';
 import { NotificationInterceptorService } from './interceptors/notification-interceptor.service';
 import { RetryPolicyInterceptorService } from './interceptors/retry-policy-interceptor.service';
+import { NgxNumberFormatModule } from 'ngx-number-format';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { RetryPolicyInterceptorService } from './interceptors/retry-policy-inter
     MatMenuModule,
     MatSelectModule,
     MatPaginatorModule,
+    NgxNumberFormatModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true },

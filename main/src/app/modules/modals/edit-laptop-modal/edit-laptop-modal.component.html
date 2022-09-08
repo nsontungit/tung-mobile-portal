@@ -20,7 +20,9 @@
             <div class="col-3">
                 <mat-form-field appearance="standard">
                     <mat-label>RAM</mat-label>
-                    <input matInput placeholder="16GB" formControlName="ram">
+                    <mat-select matInput formControlName="ram">
+                        <mat-option *ngFor="let item of ramOptions" [value]="item.value">{{ item.label }}</mat-option>
+                    </mat-select>
                     <mat-error *ngIf="laptopForm.controls['ram'].invalid">{{getErrorMessage('ram')}}</mat-error>
                 </mat-form-field>
             </div>
@@ -28,7 +30,9 @@
             <div class="col-3">
                 <mat-form-field appearance="standard">
                     <mat-label>ROM</mat-label>
-                    <input matInput placeholder="256GB" formControlName="rom">
+                    <mat-select matInput formControlName="rom">
+                        <mat-option *ngFor="let item of romOptions" [value]="item.value">{{ item.label }}</mat-option>
+                    </mat-select>
                     <mat-error *ngIf="laptopForm.controls['rom'].invalid">{{getErrorMessage('rom')}}</mat-error>
                 </mat-form-field>
             </div>
@@ -36,18 +40,12 @@
             <div class="col-2">
                 <mat-form-field appearance="standard">
                     <mat-label>screen size</mat-label>
-                    <input matInput placeholder="15" formControlName="screenSize">
+                    <mat-select matInput formControlName="screenSize">
+                        <mat-option *ngFor="let item of screenSizeOptions" [value]="item.value">{{ item.label }}</mat-option>
+                    </mat-select>
                     <mat-error *ngIf="laptopForm.controls['screenSize'].invalid">{{getErrorMessage('screenSize')}}</mat-error>
                 </mat-form-field>
             </div>
-
-            <!-- <div class="col-4">
-                <mat-form-field appearance="standard">
-                    <mat-label>brand</mat-label>
-                    <input matInput placeholder="DELL" formControlName="brand">
-                    <mat-error *ngIf="laptopForm.controls['brand'].invalid">{{getErrorMessage('brand')}}</mat-error>
-                </mat-form-field>
-            </div> -->
 
             <div class="col-4">
                 <mat-form-field appearance="standard">
@@ -72,7 +70,7 @@
             <div class="col-4">
                 <mat-form-field appearance="standard">
                     <mat-label>price</mat-label>
-                    <input matInput placeholder="0$" formControlName="price">
+                    <input matInput formControlName="price" ngxNumberFormat="###,###,###">
                     <mat-error *ngIf="laptopForm.controls['price'].invalid">{{getErrorMessage('price')}}</mat-error>
                 </mat-form-field>
             </div>

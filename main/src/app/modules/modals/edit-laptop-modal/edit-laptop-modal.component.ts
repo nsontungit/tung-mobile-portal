@@ -74,20 +74,41 @@ export class EditLaptopModalComponent implements OnInit {
     return this.laptopOptions.filter(e => e.type == 'resolution');
   }
 
+  get ramOptions(): Option[] {
+    return this.laptopOptions.filter(e => e.type == 'ram');
+  }
+
+  get screenSizeOptions(): Option[] {
+    return this.laptopOptions.filter(e => e.type == 'screen-size');
+  }
+
+  get romOptions(): Option[] {
+    return this.laptopOptions.filter(e => e.type == 'rom');
+  }
+
   get brandOptions(): Option[] {
     return this.laptopBrandOptions;
   }
 
-  getErrorMessage(name: string): string {
+  public getErrorMessage(name: string): string {
     const msg = this.errorMessageService.getErrorMsg(this.laptopForm.get(name));
     return msg == null ? null : msg[0];
   }
 
-  closeDialog() {
+  public closeDialog() {
     this.dialogRef.close([]);
   }
 
-  async submitDialog() {
+  public convertCurrencyFormat(event: InputEvent) {
+    console.log(event);
+    console.log(event.data);
+    const priceControl = this.laptopForm.get('price');
+    const priceValue = priceControl.value;
+    const convertedPriceValue = new Intl.NumberFormat().format(priceValue);
+    priceControl.setValue(convertedPriceValue);
+  }
+
+  public async submitDialog() {
     if (this.laptopForm.valid) {
       console.log('submit');
       

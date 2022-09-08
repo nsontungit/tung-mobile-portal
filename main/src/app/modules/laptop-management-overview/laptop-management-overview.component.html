@@ -39,7 +39,7 @@
 
             <ng-container matColumnDef="price">
                 <th style="width: 20%;" mat-header-cell *matHeaderCellDef>Price</th>
-                <td mat-cell *matCellDef="let laptop"> {{ laptop.price }}</td>
+                <td mat-cell *matCellDef="let laptop"> {{ laptop.price | number }}</td>
             </ng-container>
 
             <ng-container matColumnDef="button">
