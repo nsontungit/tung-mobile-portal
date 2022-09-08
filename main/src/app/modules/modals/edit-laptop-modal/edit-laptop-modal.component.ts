@@ -49,10 +49,10 @@ export class EditLaptopModalComponent implements OnInit {
     if (this.laptop != null) {
       this.laptopForm = this.formBuilder.group({
         name: [this.laptop.name, [Validators.required]],
-        ram: [this.laptop.ram, [Validators.min(4), Validators.max(256)]],
-        rom: [this.laptop.rom, [Validators.min(128), Validators.max(2048)]],
+        ram: [this.laptop.ram.toString(), [Validators.min(4), Validators.max(256)]],
+        rom: [this.laptop.rom.toString(), [Validators.min(128), Validators.max(2048)]],
         price: [this.laptop.price, [Validators.min(0)]],
-        screenSize: [this.laptop.screenSize, [Validators.min(0)]],
+        screenSize: [this.laptop.screenSize.toString(), [Validators.min(0)]],
         resolution: [this.laptop.resolution],
         brand: [this.laptop.brand],
       });
@@ -99,19 +99,8 @@ export class EditLaptopModalComponent implements OnInit {
     this.dialogRef.close([]);
   }
 
-  public convertCurrencyFormat(event: InputEvent) {
-    console.log(event);
-    console.log(event.data);
-    const priceControl = this.laptopForm.get('price');
-    const priceValue = priceControl.value;
-    const convertedPriceValue = new Intl.NumberFormat().format(priceValue);
-    priceControl.setValue(convertedPriceValue);
-  }
-
   public async submitDialog() {
     if (this.laptopForm.valid) {
-      console.log('submit');
-      
       await this.laptopService.createOne(this.laptopForm.value).toPromise();
       this.dialogRef.close([]);
     }
