@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Operation } from 'src/app/enums/operations';
 import { EditLaptopModalComponent } from '../modals/edit-laptop-modal/edit-laptop-modal.component';
@@ -6,20 +6,26 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LaptopService } from 'src/app/services/laptop.service';
 import { Laptop } from 'src/app/models/laptop';
 import { Option } from 'src/app/models/option';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Paging } from 'src/app/models/common';
+import { MatSort, Sort } from '@angular/material/sort';
+import { Observable } from 'rxjs';
+import { UtilsService } from 'src/app/services/utils.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-laptop-management-overview',
   templateUrl: './laptop-management-overview.component.html',
   styleUrls: ['./laptop-management-overview.component.css']
 })
-export class LaptopManagementOverviewComponent implements OnInit {
+export class LaptopManagementOverviewComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(MatSort) sort: MatSort;
   // MatPaginator Inputs
-  totalRows: number;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageSize: number = 5;
+  public totalRows: number;
+  public pageSizeOptions: number[] = [5, 10, 25, 100];
+  public pageSize: number = 5;
+  public tableDataSource: MatTableDataSource<Laptop>;
 
   private pagingLaptops: Paging<Laptop>;
   private dialogConfig: MatDialogConfig = {
@@ -33,11 +39,17 @@ export class LaptopManagementOverviewComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private laptopService: LaptopService
+    private laptopService: LaptopService,
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  async ngAfterViewInit() {
     await this.prepareLaptopData();
+    this.tableDataSource = new MatTableDataSource(this.pagingLaptops?.data);
+    this.tableDataSource.sort = this.sort;
+  }
+
+  async ngOnInit(): Promise<void> {
+    // await this.prepareLaptopData();
   }
 
   openCreateDialog(): void {
@@ -56,12 +68,12 @@ export class LaptopManagementOverviewComponent implements OnInit {
     }
   }
 
-  get dataSource(): Laptop[] {
-    return this.pagingLaptops?.data;
+  get dataSource(): MatTableDataSource<Laptop> {
+    return this.tableDataSource;
   }
 
   get resultCount(): number {
-    return this.pagingLaptops?.data?.length;
+    return this.tableDataSource?.data?.length;
   }
 
   private async prepareLaptopData() {
@@ -77,10 +89,15 @@ export class LaptopManagementOverviewComponent implements OnInit {
 
   public async pageChange(pageEvent: PageEvent) {
     this.pagingLaptops = await this.laptopService.getAll(pageEvent.pageSize, pageEvent.pageIndex).toPromise();
+    this.tableDataSource.data = this.pagingLaptops?.data;
   }
 
   private getLaptopById(id: number): Laptop {
-    return this.pagingLaptops.data.find(e => e.id == id);
+    return this.pagingLaptops?.data?.find(e => e.id == id);
   }
 
+  public sortChange(sortState: Sort) {
+    // TODO: show notification for sort
+    console.log(`sort by ${sortState.active}`);
+  }
 }
