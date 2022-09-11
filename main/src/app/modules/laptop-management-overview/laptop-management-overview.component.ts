@@ -1,24 +1,20 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, AfterContentChecked } from '@angular/core';
 import { Operation } from 'src/app/enums/operations';
 import { EditLaptopModalComponent } from '../modals/edit-laptop-modal/edit-laptop-modal.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LaptopService } from 'src/app/services/laptop.service';
 import { Laptop } from 'src/app/models/laptop';
-import { Option } from 'src/app/models/option';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Paging } from 'src/app/models/common';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Observable } from 'rxjs';
-import { UtilsService } from 'src/app/services/utils.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-laptop-management-overview',
   templateUrl: './laptop-management-overview.component.html',
   styleUrls: ['./laptop-management-overview.component.css']
 })
-export class LaptopManagementOverviewComponent implements OnInit, AfterViewInit {
+export class LaptopManagementOverviewComponent implements OnInit, AfterViewInit, AfterContentChecked {
 
   @ViewChild(MatSort) sort: MatSort;
   // MatPaginator Inputs
@@ -33,14 +29,19 @@ export class LaptopManagementOverviewComponent implements OnInit, AfterViewInit 
     width: '70em',
     direction: 'ltr',
     autoFocus: true,
-    position: { top: '5%' }
+    position: { top: '5%' },
   };
   displayedColumns: string[] = ['name', 'ram', 'rom', 'resolution', 'screenSize', 'price', 'button'];
 
   constructor(
     private dialog: MatDialog,
     private laptopService: LaptopService,
+    private cdref: ChangeDetectorRef,
   ) { }
+
+  ngAfterContentChecked(): void {
+    this.cdref.detectChanges();
+  }
 
   async ngAfterViewInit() {
     await this.prepareLaptopData();

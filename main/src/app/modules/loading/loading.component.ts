@@ -1,25 +1,29 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { from, Observable, Subject } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, AfterContentChecked } from '@angular/core';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-loading',
   templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.css']
+  styleUrls: ['./loading.component.css'],
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements OnInit, AfterContentChecked {
 
-  isLoading$: Observable<boolean>;
+  isLoading: boolean;
 
   constructor(
     private spinnerService: SpinnerService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
   ) { }
 
-  ngOnInit(): void {
-    this.isLoading$ = this.spinnerService.getSpinnerObserver();
+  ngAfterContentChecked(): void {
     this.cdref.detectChanges();
   }
 
+  ngOnInit(): void {
+    this.spinnerService?.getSpinnerObserver()
+      .subscribe(val => {
+        this.isLoading = val;
+      });
+  }
 }
