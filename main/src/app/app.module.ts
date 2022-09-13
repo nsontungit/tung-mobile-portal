@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainNavbarComponent } from './modules/main-navbar/main-navbar.component';
@@ -29,6 +28,7 @@ import { LoadingComponent } from './modules/loading/loading.component';
 import { NotificationInterceptorService } from './interceptors/notification-interceptor.service';
 import { RetryPolicyInterceptorService } from './interceptors/retry-policy-interceptor.service';
 import { NgxNumberFormatModule } from 'ngx-number-format';
+import { ConfirmDialogComponent } from './modules/modals/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +38,7 @@ import { NgxNumberFormatModule } from 'ngx-number-format';
     MobileManagementOverviewComponent,
     EditLaptopModalComponent,
     LoadingComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
