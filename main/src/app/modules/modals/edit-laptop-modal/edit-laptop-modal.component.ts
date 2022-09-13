@@ -101,7 +101,12 @@ export class EditLaptopModalComponent implements OnInit {
 
   public async submitDialog() {
     if (this.laptopForm.valid) {
-      await this.laptopService.createOne(this.laptopForm.value).toPromise();
+      if (this.operation == Operation.Create) {
+        await this.laptopService.createOne(this.laptopForm.value).toPromise();
+      }
+      else if (this.operation == Operation.Update) {
+        await this.laptopService.updateOne(this.laptop?.id, this.laptopForm.value).toPromise();
+      }
       this.dialogRef.close([]);
     }
   }

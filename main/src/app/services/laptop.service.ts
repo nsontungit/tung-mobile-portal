@@ -46,4 +46,8 @@ export class LaptopService {
   createOne(formData): Observable<ApiResult> {
     return this.http.post<ApiResult>(`${this.product_url}/${this.laptop_suffix}`, formData);
   }
+
+  updateOne(id: number, formData): Observable<ApiResult> {
+    return this.http.put<ApiResult>(`${this.product_url}/${this.laptop_suffix}/${id}`, formData);
+  }
 }
