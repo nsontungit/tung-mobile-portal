@@ -13,11 +13,4 @@ export class MainNavbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  subMenuConfig: MenuConfig[] = [
-    { label: 'Laptops', path: '/management/laptops' },
-    { label: 'Mobiles', path: '/management/mobiles' },
-  ];
-
-
 }

@@ -1,21 +1,25 @@
-<!-- <nav>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Management
-    </button>
-    <ul class="dropdown-menu">
-      <li *ngFor="let item of subMenuConfig">
-        <a class="dropdown-item" [routerLink]="item.path">{{ item.label }}</a>
-      </li>
-    </ul>
+<nav class="d-flex p-3 mb-3">
+  <div class="me-2">
+    <button mat-button [matMenuTriggerFor]="item1">Management <mat-icon>keyboard_arrow_down</mat-icon></button>
+    <mat-menu #item1="matMenu">
+      <button mat-menu-item>
+        <a class="dropdown-item" routerLink="/management/laptops">Laptops</a>
+      </button>
+      <button mat-menu-item>
+        <a class="dropdown-item" routerLink="/management/mobiles">Mobiles</a>
+      </button>
+    </mat-menu>
   </div>
-</nav> -->
 
-<nav class="p-3 mb-3">
-  <button mat-button [matMenuTriggerFor]="menu">Management <mat-icon>keyboard_arrow_down</mat-icon></button>
-  <mat-menu #menu="matMenu">
-    <button *ngFor="let item of subMenuConfig; let i = index;" mat-menu-item>
-      <a class="dropdown-item" [routerLink]="item.path">{{ item.label }}</a>
-    </button>
-  </mat-menu>
+  <div class="me-2">
+    <button mat-button [matMenuTriggerFor]="item2">Datasets <mat-icon>keyboard_arrow_down</mat-icon></button>
+    <mat-menu #item2="matMenu">
+      <button mat-menu-item>
+        <a class="dropdown-item" routerLink="/datasets/laptops">Laptops</a>
+      </button>
+      <button mat-menu-item>
+        <a class="dropdown-item" routerLink="/datasets/mobiles">Mobiles</a>
+      </button>
+    </mat-menu>
+  </div>
 </nav>

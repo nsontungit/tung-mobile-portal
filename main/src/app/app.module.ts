@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,6 +30,7 @@ import { NotificationInterceptorService } from './interceptors/notification-inte
 import { RetryPolicyInterceptorService } from './interceptors/retry-policy-interceptor.service';
 import { NgxNumberFormatModule } from 'ngx-number-format';
 import { ConfirmDialogComponent } from './modules/modals/confirm-dialog/confirm-dialog.component';
+import { LaptopDatasetOverviewComponent } from './modules/laptop-dataset-overview/laptop-dataset-overview.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { ConfirmDialogComponent } from './modules/modals/confirm-dialog/confirm-
     EditLaptopModalComponent,
     LoadingComponent,
     ConfirmDialogComponent,
+    LaptopDatasetOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { ConfirmDialogComponent } from './modules/modals/confirm-dialog/confirm-
     MatPaginatorModule,
     NgxNumberFormatModule,
     MatSortModule,
+    MatExpansionModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true },
