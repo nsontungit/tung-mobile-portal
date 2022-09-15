@@ -46,6 +46,8 @@ export class EditLaptopModalComponent implements OnInit {
     ]).then(values => {
       this.laptopOptions = values[0];
       this.laptopBrandOptions = values[1];
+    }).catch(err => {
+      this.dialogRef.close([]);
     });
   }
 
